@@ -1,6 +1,6 @@
 [
   { "id": "3e914482f2b34994", "type": "tab", "label": "企业微信 - 消息接收", "disabled": false, "info": "", "env": [] },
-  { "id": "d707c3316f0c3229", "type": "wechat-acceptor", "z": "3e914482f2b34994", "name": "", "wechat": "50d2ad375251abe5", "endpoint": "/wechat", "timeout": "10000", "x": 320, "y": 200, "wires": [["e7ea840681473f4b"], ["d674983a13f06987", "20599ca8e9ac14eb"]] },
+  { "id": "d707c3316f0c3229", "type": "wechat-acceptor", "z": "3e914482f2b34994", "name": "", "wechat": "60da30a4a207aa7e", "endpoint": "/wechat", "timeout": "5000", "timeout_type": "list", "x": 380, "y": 200, "wires": [["e7ea840681473f4b"], ["d674983a13f06987"]] },
   {
     "id": "e7ea840681473f4b",
     "type": "debug",
@@ -15,7 +15,7 @@
     "statusVal": "",
     "statusType": "auto",
     "x": 600,
-    "y": 140,
+    "y": 180,
     "wires": []
   },
   {
@@ -32,9 +32,8 @@
     "statusVal": "",
     "statusType": "auto",
     "x": 600,
-    "y": 260,
+    "y": 220,
     "wires": []
   },
-  { "id": "20599ca8e9ac14eb", "type": "wechat-reply", "z": "3e914482f2b34994", "name": "", "rtype": "json", "content": "", "filename": "", "filename_type": "str", "x": 560, "y": 200, "wires": [] },
-  { "id": "50d2ad375251abe5", "type": "wechat-configurator", "name": "" }
+  { "id": "60da30a4a207aa7e", "type": "wechat-configurator", "name": "" }
 ]
