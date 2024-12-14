@@ -43,7 +43,6 @@
     "pnpm": ">=8"
   },
   "dependencies": {
-    "crypto": "^1.0.1",
     "form-data": "^4.0.1",
     "multer": "1.4.5-lts.1",
     "mustache": "^4.2.0",

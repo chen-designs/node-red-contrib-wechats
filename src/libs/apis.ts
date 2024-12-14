@@ -1,4 +1,4 @@
-import crypto from 'crypto'
+import crypto from 'node:crypto'
 import { Response } from 'express'
 import { drop, pick } from 'lodash-es'
 import { AxiosRequestConfig } from 'axios'
