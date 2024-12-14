@@ -12,7 +12,7 @@ import copy from 'rollup-plugin-copy'
 export default defineConfig({
   input: glob.sync('src/nodes/*.ts'),
   output: { dir: 'nodes', format: 'cjs' },
-  external: ['mustache', 'axios', 'multer', 'xml2js', 'form-data', 'stream'],
+  external: ['mustache', 'axios', 'multer', 'xml2js', 'form-data'],
   plugins: [
     commonjs({ strictRequires: true }), // 支持打包cjs模块
     typescript({ tsconfig: './tsconfig.json' }), //
