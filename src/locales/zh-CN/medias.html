@@ -1,0 +1,226 @@
+<script type="text/html" data-help-name="wechat-medias">
+  <p>
+    <span>在使用企业微信API接口中, 往往开发者需要使用自定义的资源, 比如发送本地图片消息, 设置通讯录自定义头像等。 为了实现同一资源文件, 一次上传可以多次使用, 这里提供了素材管理接口: 以<code>media_id</code>来标识资源文件, 实现文件的上传与下载</span>
+    <a href="https://developer.work.weixin.qq.com/document/path/96483">查看详情</a>
+  </p>
+
+  <h3>输入信息</h3>
+  <ol class="node-ports">
+    <li>
+      <span>获取临时素材</span>
+      <a style="float:right;margin-right:6px;font-size:12px" href="https://developer.work.weixin.qq.com/document/path/96486">参数详情</a>
+      <dl class="message-properties">
+        <dt>
+          <span>执行模式</span>
+          <span class="property-type">
+            <code>获取临时素材</code>
+          </span>
+        </dt>
+        <dd>根据媒体文件id获取文件</dd>
+        <dt>
+          <span>媒体 ID</span>
+          <span class="property-type">
+            <code>string</code>
+          </span>
+        </dt>
+        <dd>
+          媒体文件id，见
+          <a href="https://developer.work.weixin.qq.com/document/path/96484">上传临时素材</a>
+          ，以及
+          <a href="https://developer.work.weixin.qq.com/document/path/96488">异步上传临时素材</a>
+        </dd>
+      </dl>
+    </li>
+    <li>
+      <span>上传临时素材</span>
+      <a style="float:right;margin-right:6px;font-size:12px" href="https://developer.work.weixin.qq.com/document/path/96484">参数详情</a>
+      <dl class="message-properties">
+        <dt>
+          <span>执行模式</span>
+          <span class="property-type">
+            <code>上传临时素材</code>
+          </span>
+        </dt>
+        <dd>上传临时素材，获取媒体文件id，用户发送语音、图文消息，该媒体文件id仅三天内有效</dd>
+        <dt>
+          <span>文件内容</span>
+          <span class="property-type">
+            <code>buffer</code>
+            <span>|</span>
+            <code>base64</code>
+          </span>
+        </dt>
+        <dd>
+          文件内容必须是
+          <code>二进制文件数据</code>
+          或
+          <code>base64</code>
+          编码后的文件数据
+        </dd>
+        <dt>
+          <span>文件类型</span>
+          <span class="property-type">
+            <code>select</code>
+          </span>
+        </dt>
+        <dd>
+          文件类型分别有图片(
+          <code>image</code>
+          )、语音(
+          <code>voice</code>
+          )、视频(
+          <code>video</code>
+          )、普通文件(
+          <code>file</code>
+          )
+        </dd>
+        <dt>
+          <span>文件名称</span>
+          <span class="property-type">
+            <code>string</code>
+          </span>
+        </dt>
+        <dd>
+          标识文件展示的名称。比如, 使用该
+          <code>media_id</code>
+          发消息时, 展示的文件名由该字段控制
+        </dd>
+      </dl>
+    </li>
+    <li>
+      <span>上传图片</span>
+      <a style="float:right;margin-right:6px;font-size:12px" href="https://developer.work.weixin.qq.com/document/path/96485">参数详情</a>
+      <dl class="message-properties">
+        <dt>
+          <span>执行模式</span>
+          <span class="property-type">
+            <code>上传图片</code>
+          </span>
+        </dt>
+        <dd>上传图片得到图片URL，该URL永久有效，返回的图片URL，仅能用于图文消息正文中的图片展示，或者给客户发送欢迎语等；</dd>
+        <dt>
+          <span>文件内容</span>
+          <span class="property-type">
+            <code>buffer</code>
+            <span>|</span>
+            <code>base64</code>
+          </span>
+        </dt>
+        <dd>
+          <div>
+            文件内容必须是
+            <code>二进制文件数据</code>
+            或
+            <code>base64</code>
+            编码后的文件数据
+          </div>
+          <div>仅支持上传图片，图片文件大小应在 5B ~ 2MB 之间</div>
+        </dd>
+        <dt>
+          <span>文件名称</span>
+          <span class="property-type">
+            <code>string</code>
+          </span>
+        </dt>
+        <dd>
+          文件展示的名称, 比如使用该
+          <code>media_id</code>
+          发消息时, 展示的文件名由该字段控制
+        </dd>
+      </dl>
+    </li>
+  </ol>
+
+  <h3>输出信息</h3>
+  <ol class="node-ports">
+    <li>
+      <span>获取临时素材</span>
+      <a style="float:right;margin-right:6px;font-size:12px" href="https://developer.work.weixin.qq.com/document/path/96486">参数详情</a>
+      <dl class="message-properties">
+        <dt>
+          <span>payload</span>
+          <span class="property-type">
+            <code>buffer</code>
+          </span>
+        </dt>
+        <dd>文件二进制数据</dd>
+      </dl>
+    </li>
+    <li>
+      <span>上传临时素材</span>
+      <a style="float:right;margin-right:6px;font-size:12px" href="https://developer.work.weixin.qq.com/document/path/96484">参数详情</a>
+      <dl class="message-properties">
+        <dt>
+          <span>payload</span>
+          <span class="property-type">
+            <code>object</code>
+          </span>
+        </dt>
+        <dd>返回结果</dd>
+        <dt>
+          <span>payload.type</span>
+          <span class="property-type">
+            <code>string</code>
+          </span>
+        </dt>
+        <dd>媒体文件类型, 分别有图片(image)、语音(voice)、视频(video)、普通文件(file)</dd>
+        <dt>
+          <span>payload.media_id</span>
+          <span class="property-type">
+            <code>string</code>
+          </span>
+        </dt>
+        <dd>媒体文件上传后获取的唯一标识, 3天内有效</dd>
+        <dt>
+          <span>payload.created_at</span>
+          <span class="property-type">
+            <code>string</code>
+          </span>
+        </dt>
+        <dd>媒体文件上传时间戳</dd>
+      </dl>
+    </li>
+    <li>
+      <span>上传图片</span>
+      <a style="float:right;margin-right:6px;font-size:12px" href="https://developer.work.weixin.qq.com/document/path/96485">参数详情</a>
+      <dl class="message-properties">
+        <dt>
+          <span>payload</span>
+          <span class="property-type">
+            <code>string</code>
+          </span>
+        </dt>
+        <dd>上传后得到的图片URL。永久有效</dd>
+      </dl>
+    </li>
+  </ol>
+
+  <h3>上传的媒体文件限制</h3>
+  <ul>
+    <li>
+      所有文件
+      <code>size</code>
+      必须大于5个字节
+    </li>
+    <li>
+      图片(
+      <code></code>
+      ): 最大 10MB, 支持 JPG、PNG 格式
+    </li>
+    <li>
+      语音(
+      <code>voice</code>
+      ): 最大 2MB, 播放长度不超过 60s, 仅支持 AMR 格式
+    </li>
+    <li>
+      视频(
+      <code>video</code>
+      ): 最大 10MB, 支持 MP4 格式
+    </li>
+    <li>
+      普通文件(
+      <code>file</code>
+      ): 最大 20MB
+    </li>
+  </ul>
+</script>

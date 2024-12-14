@@ -1,0 +1,117 @@
+<script type="text/html" data-template-name="wechat-configurator">
+  <div class="form-row">
+    <label for="node-config-input-name">
+      <i class="fa fa-tag"></i>
+      <span class="margin-left:8px">应用名称</span>
+    </label>
+    <input id="node-config-input-name" type="text" placeholder="企业应用名称" style="width:70%" />
+  </div>
+  <div class="form-row">
+    <label for="node-config-input-corpid">
+      <i class="fa fa-key"></i>
+      <span class="margin-left:8px">CorpId</span>
+    </label>
+    <input id="node-config-input-corpid" type="text" placeholder="CorpId" style="width:70%" />
+    <input id="node-config-input-corpid_type" type="hidden" />
+  </div>
+  <div class="form-row">
+    <label for="node-config-input-agentid">
+      <i class="fa fa-key"></i>
+      <span class="margin-left:8px">AgentId</span>
+    </label>
+    <input id="node-config-input-agentid" type="text" placeholder="AgentId" style="width:70%" />
+    <input id="node-config-input-agentid_type" type="hidden" />
+  </div>
+  <div class="form-row">
+    <label for="node-config-input-secret">
+      <i class="fa fa-key"></i>
+      <span class="margin-left:8px">Secret</span>
+    </label>
+    <input id="node-config-input-secret" type="text" placeholder="Secret" style="width:70%" />
+    <input id="node-config-input-secret_type" type="hidden" />
+  </div>
+  <div class="form-row">
+    <label for="node-config-input-token">
+      <i class="fa fa-key"></i>
+      <span class="margin-left:8px">Token</span>
+    </label>
+    <input id="node-config-input-token" type="text" placeholder="Token" style="width:70%" />
+    <input id="node-config-input-token_type" type="hidden" />
+  </div>
+  <div class="form-row">
+    <label for="node-config-input-aeskey">
+      <i class="fa fa-key"></i>
+      <span class="margin-left:8px">AES Key</span>
+    </label>
+    <input id="node-config-input-aeskey" type="text" placeholder="EncodingAESKey" style="width:70%" />
+    <input id="node-config-input-aeskey_type" type="hidden" />
+  </div>
+  <div class="form-row">
+    <label for="node-config-input-proxy">
+      <i class="fa fa-link"></i>
+      <span class="margin-left:8px">Proxy Url</span>
+    </label>
+    <input id="node-config-input-proxy" type="text" placeholder="https://qyapi.weixin.qq.com" style="width:70%" />
+    <input id="node-config-input-proxy_type" type="hidden" />
+  </div>
+</script>
+
+<script type="text/javascript">
+	RED.nodes.registerType('wechat-configurator', {
+		category: 'config',
+		color: '#2fc22e',
+		paletteLabel: '企业消息配置',
+		label: function () {
+			return this.name || '企业消息配置'
+		},
+		defaults: {
+			name: { value: '', type: 'text' }
+		},
+		credentials: {
+			corpid: { type: 'text', required: true },
+			corpid_type: { value: 'str', type: 'text' },
+			agentid: { type: 'text', required: true },
+			agentid_type: { value: 'str', type: 'text' },
+			secret: { type: 'text', required: true },
+			secret_type: { value: 'str', type: 'text' },
+			token: { type: 'text', required: true },
+			token_type: { value: 'str', type: 'text' },
+			aeskey: { type: 'text', required: true },
+			aeskey_type: { value: 'str', type: 'text' },
+			proxy: { type: 'text' },
+			proxy_type: { value: 'str', type: 'text' }
+		},
+		oneditprepare() {
+			$('#node-config-input-corpid').typedInput({
+				typeField: $('#node-config-input-corpid_type'),
+				default: this.corpid_type || 'cred',
+				types: ['str', 'cred', 'env', 'flow','global']
+			})
+			$('#node-config-input-agentid').typedInput({
+				typeField: $('#node-config-input-agentid_type'),
+				default: this.agentid_type || 'cred',
+				types: ['str', 'cred', 'env', 'flow','global']
+			})
+			$('#node-config-input-secret').typedInput({
+				typeField: $('#node-config-input-secret_type'),
+				default: this.secret_type || 'cred',
+				types: ['str', 'cred', 'env', 'flow','global']
+			})
+			$('#node-config-input-token').typedInput({
+				typeField: $('#node-config-input-token_type'),
+				default: this.token_type || 'cred',
+				types: ['str', 'cred', 'env', 'flow','global']
+			})
+			$('#node-config-input-aeskey').typedInput({
+				typeField: $('#node-config-input-aeskey_type'),
+				default: this.aeskey_type || 'cred',
+				types: ['str', 'cred', 'env', 'flow','global']
+			})
+			$('#node-config-input-proxy').typedInput({
+				typeField: $('#node-config-input-proxy_type'),
+				default: this.proxy_type || 'str',
+				types: ['str', 'cred', 'env', 'flow','global']
+			})
+		}
+	})
+</script>

@@ -1,0 +1,139 @@
+<script type="text/html" data-template-name="wechat-pusher">
+  <div class="form-row">
+    <label for="node-input-wechat">
+      <i class="fa fa-cogs"></i>
+      <span class="margin-left:8px">配置</span>
+    </label>
+    <input type="text" id="node-input-wechat" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-name">
+      <i class="fa fa-tag"></i>
+      <span class="margin-left:8px">名称</span>
+    </label>
+    <input type="text" id="node-input-name" placeholder="发送消息" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-mtype">
+      <i class="fa fa-bars"></i>
+      <span class="margin-left:8px">消息类型</span>
+    </label>
+    <input type="text" id="node-input-mtype" placeholder="消息类型" style="width:70%" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-content">
+      <i class="fa fa-commenting"></i>
+      <span class="margin-left:8px">消息内容</span>
+    </label>
+    <input id="node-input-content" type="text" placeholder="消息内容" style="width:70%" />
+    <input id="node-input-content_type" type="hidden" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-touser">
+      <i class="fa fa-users"></i>
+      <span class="margin-left:8px">接收成员</span>
+    </label>
+    <input id="node-input-touser" type="text" placeholder="默认 @all 所有成员" style="width:70%" />
+    <input id="node-input-touser_type" type="hidden" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-toparty">
+      <i class="fa fa-sitemap"></i>
+      <span class="margin-left:8px">接收部门</span>
+    </label>
+    <input id="node-input-toparty" type="text" placeholder="指定接收消息的部门" style="width:70%" />
+    <input id="node-input-toparty_type" type="hidden" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-totag">
+      <i class="fa fa-tags"></i>
+      <span class="margin-left:8px">接收标签</span>
+    </label>
+    <input id="node-input-totag" type="text" placeholder="指定接收消息的标签" style="width:70%" />
+    <input id="node-input-totag_type" type="hidden" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-safe">
+      <i class="fa fa-lock"></i>
+      <span class="margin-left:8px">否是保密</span>
+    </label>
+    <input type="text" id="node-input-safe" placeholder="是否保密消息" style="width:70%" />
+  </div>
+</script>
+
+<script type="text/javascript">
+  ;(function () {
+    const TYPE_OPTIONS = [
+      { value: 'text', label: '文本消息' },
+      { value: 'image', label: '图片消息' },
+      { value: 'voice', label: '语音消息' },
+      { value: 'video', label: '视频消息' },
+      { value: 'file', label: '文件消息' },
+      { value: 'news', label: '图文消息' },
+      { value: 'textcard', label: '文本卡片消息' },
+      { value: 'template_card', label: '模板卡片消息' },
+      { value: 'markdown', label: 'Markdown' }
+    ]
+    RED.nodes.registerType('wechat-pusher', {
+      icon: 'pusher.svg',
+      category: '企业微信',
+      color: '#2fc22e',
+      paletteLabel: '发送消息',
+      label: function () {
+        return this.name || (TYPE_OPTIONS.find(({ value }) => value === this.mtype) || { label: '发送消息' }).label
+      },
+      defaults: {
+        name: { value: '' },
+        wechat: { value: '', type: 'wechat-configurator' },
+        mtype: { value: 'text', type: 'text' },
+        content: { value: '', type: 'text' },
+        content_type: { value: 'str', type: 'text' },
+        touser: { value: '', type: 'text' },
+        touser_type: { value: 'str', type: 'text' },
+        toparty: { value: '', type: 'text' },
+        toparty_type: { value: 'str', type: 'text' },
+        totag: { value: '', type: 'text' },
+        totag_type: { value: 'str', type: 'text' },
+        safe: { value: '0', type: 'text' }
+      },
+      inputs: 1,
+      outputs: 1,
+      oneditprepare() {
+        $('#node-input-mtype').typedInput({ types: [{ value: 'list', icon: 'fa fa-list', label: '选项', options: TYPE_OPTIONS }] })
+        $('#node-input-content').typedInput({
+          typeField: '#node-input-content_type',
+          default: this.content_type || 'str',
+          types: ['str', 'msg', 'flow', 'global', 'json', 'jsonata', 'env']
+        })
+        $('#node-input-touser').typedInput({
+          typeField: '#node-input-touser_type',
+          default: this.touser_type || 'str',
+          types: ['str', 'msg', 'flow', 'global', 'env']
+        })
+        $('#node-input-toparty').typedInput({
+          typeField: '#node-input-toparty_type',
+          default: this.toparty_type || 'str',
+          types: ['str', 'msg', 'flow', 'global', 'env']
+        })
+        $('#node-input-totag').typedInput({
+          typeField: '#node-input-totag_type',
+          default: this.totag_type || 'str',
+          types: ['str', 'msg', 'flow', 'global', 'env']
+        })
+        $('#node-input-safe').typedInput({
+          types: [
+            {
+              value: 'list',
+              icon: 'fa fa-list',
+              label: '选项',
+              options: [
+                { value: '1', label: '是' },
+                { value: '0', label: '否' }
+              ]
+            }
+          ]
+        })
+      }
+    })
+  })()
+</script>

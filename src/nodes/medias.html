@@ -1,0 +1,133 @@
+<script type="text/html" data-template-name="wechat-medias">
+  <div class="form-row">
+    <label for="node-input-wechat">
+      <i class="fa fa-cogs"></i>
+      <span class="margin-left:8px">配置</span>
+    </label>
+    <input id="node-input-wechat" type="text" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-name">
+      <i class="fa fa-tag"></i>
+      <span class="margin-left:8px">名称</span>
+    </label>
+    <input id="node-input-name" type="text" placeholder="素材管理" style="width:70%" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-mode">
+      <i class="fa fa-terminal"></i>
+      <span class="margin-left:8px">执行模式</span>
+    </label>
+    <input id="node-input-mode" type="text" placeholder="执行模式" style="width:70%" />
+  </div>
+  <div class="form-row optional optional-get">
+    <label for="node-input-media">
+      <i class="fa fa-file"></i>
+      <span class="margin-left:8px">媒体 ID</span>
+    </label>
+    <input id="node-input-media" type="text" placeholder="媒体 ID" style="width:70%" />
+    <input id="node-input-media_type" type="hidden" />
+  </div>
+  <div class="form-row optional optional-upload optional-uploadimg">
+    <label for="node-input-file">
+      <i class="fa fa-file"></i>
+      <span class="margin-left:8px">文件内容</span>
+    </label>
+    <div style="display:inline-flex;align-items:center;width:70%;">
+      <div style="flex:1">
+        <input id="node-input-file" type="text" placeholder="文件内容" style="width:100%" />
+        <input id="node-input-file_type" type="hidden" />
+      </div>
+      <label for="node-input-base64" style="width:50px;text-align:center;margin-left:8px;">
+        <input id="node-input-base64" type="checkbox" />
+        <span>Base64</span>
+      </label>
+    </div>
+  </div>
+  <div class="form-row optional optional-upload">
+    <label for="node-input-ftype">
+      <i class="fa fa-bars"></i>
+      <span class="margin-left:8px">文件类型</span>
+    </label>
+    <input id="node-input-ftype" type="text" placeholder="文件类型" style="width:70%" />
+    <input id="node-input-ftype_type" type="hidden" />
+  </div>
+  <div class="form-row optional optional-upload optional-uploadimg">
+    <label for="node-input-filename">
+      <i class="fa fa-file"></i>
+      <span class="margin-left:8px">文件名称</span>
+    </label>
+    <input id="node-input-filename" type="text" placeholder="文件名称" style="width:70%" />
+    <input id="node-input-filename_type" type="hidden" />
+  </div>
+</script>
+
+<script type="text/javascript">
+  ;(function () {
+    const MODE_OPTIONS = [
+      { value: 'get', label: '获取临时素材' },
+      { value: 'upload', label: '上传临时素材' },
+      { value: 'uploadimg', label: '上传图片' }
+    ]
+    RED.nodes.registerType('wechat-medias', {
+      icon: 'medias.svg',
+      category: '企业微信',
+      color: '#2fc22e',
+      paletteLabel: '素材管理',
+      label: function () {
+        return this.name || '素材管理'
+      },
+      defaults: {
+        name: { value: '' },
+        wechat: { value: '', type: 'wechat-configurator' },
+        mode: { value: '', type: 'text' },
+        media: { value: '', type: 'text' },
+        media_type: { value: 'str', type: 'text' },
+        ftype_type: { value: '', type: 'text' },
+        ftype: { value: 'list', type: 'text' },
+        file: { value: '', type: 'text' },
+        file_type: { value: 'str', type: 'text' },
+        filename: { value: '', type: 'text' },
+        filename_type: { value: 'str', type: 'text' },
+        base64: { value: '', type: 'text' }
+      },
+      inputs: 1,
+      outputs: 1,
+      oneditprepare() {
+        $('#node-input-mode')
+          .typedInput({ types: [{ value: 'list', icon: 'fa fa-list', label: '选项', options: MODE_OPTIONS }] })
+          .on('change', (event, type, value) => {
+            console.info('optional : ', { type, value })
+            $('.optional').hide()
+            $(`.optional-${value}`).show()
+          })
+        $('#node-input-media').typedInput({
+          typeField: '#node-input-media_type',
+          default: this.media_type || 'str',
+          types: ['str', 'msg', 'flow', 'global', 'env']
+        })
+        $('#node-input-file').typedInput({
+          typeField: '#node-input-file_type',
+          default: this.file_type || 'str',
+          types: ['str', 'msg', 'flow', 'global', 'env']
+        })
+        const FILE_TYPES = [
+          { value: 'image', label: '图片' },
+          { value: 'voice', label: '语音' },
+          { value: 'video', label: '视频' },
+          { value: 'file', label: '文件' }
+        ]
+        $('#node-input-ftype').typedInput({
+          typeField: '#node-input-ftype_type',
+          default: this.ftype_type || 'list',
+          types: ['str', 'msg', 'flow', 'global', { value: 'list', icon: 'fa fa-list', label: '选项', options: FILE_TYPES }, 'env']
+        })
+        $('#node-input-filename').typedInput({
+          typeField: '#node-input-filename_type',
+          default: this.filename_type || 'str',
+          types: ['str', 'msg', 'flow', 'global', 'env']
+        })
+      }
+    })
+  })()
+</script>

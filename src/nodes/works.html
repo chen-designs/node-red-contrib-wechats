@@ -1,0 +1,106 @@
+<script type="text/html" data-template-name="wechat-works">
+  <div class="form-row">
+    <label for="node-input-wechat">
+      <i class="fa fa-cogs"></i>
+      <span class="margin-left:8px">配置</span>
+    </label>
+    <input type="text" id="node-input-wechat" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-name">
+      <i class="fa fa-tag"></i>
+      <span class="margin-left:8px">名称</span>
+    </label>
+    <input type="text" id="node-input-name" placeholder="设置工作台" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-mode">
+      <i class="fa fa-terminal"></i>
+      <span class="margin-left:8px">模式</span>
+    </label>
+    <input type="text" id="node-input-mode" style="width:70%" placeholder="执行模式" />
+  </div>
+	<div class="form-row optional optional-set_workbench_template optional-get_workbench_data optional-set_workbench_data optional-batch_set_workbench_data">
+    <label for="node-input-agentid">
+      <i class="fa fa-th"></i>
+      <span class="margin-left:8px">应用 ID</span>
+    </label>
+    <input id="node-input-agentid" type="text" style="width:70%" placeholder="应用 ID" />
+    <input id="node-input-agentid_type" type="hidden" />
+  </div>
+  <div class="form-row optional optional-get_workbench_data optional-set_workbench_data optional-batch_set_workbench_data">
+    <label for="node-input-user">
+      <i class="fa fa-user"></i>
+      <span class="margin-left:8px">用户 ID</span>
+    </label>
+    <input id="node-input-user" type="text" style="width:70%" placeholder="用户 ID" />
+    <input id="node-input-user_type" type="hidden" />
+  </div>
+  <div class="form-row optional optional-set_workbench_template optional-set_workbench_data optional-batch_set_workbench_data">
+    <label for="node-input-data">
+      <i class="fa fa-th-list"></i>
+      <span class="margin-left:8px">模版数据</span>
+    </label>
+    <input id="node-input-data" type="text" style="width:70%" placeholder="模版数据" />
+    <input id="node-input-data_type" type="hidden" />
+  </div>
+</script>
+
+<script type="text/javascript">
+	; (function () {
+		const MODE_OPTIONS = [
+			{ value: 'get_workbench_template', label: '获取应用在工作台展示的模版' },
+			{ value: 'set_workbench_template', label: '设置应用在工作台展示的模版' },
+			{ value: 'get_workbench_data', label: '获取应用在用户工作台展示的数据' },
+			{ value: 'set_workbench_data', label: '设置应用在用户工作台展示的数据' },
+			{ value: 'batch_set_workbench_data', label: '批量设置应用在用户工作台展示的数据' }
+		]
+		RED.nodes.registerType('wechat-works', {
+			icon: 'workbench.svg',
+			category: '企业微信',
+			color: '#2fc22e',
+			paletteLabel: '设置工作台',
+			label: function () {
+				return this.name || (MODE_OPTIONS.find(item => item.value === this.mode) || { label: '设置工作台' }).label
+			},
+			defaults: {
+				name: { value: '' },
+				wechat: { value: '', type: 'wechat-configurator' },
+				mode: { value: 'get_workbench_template', type: 'text' },
+				agentid: { value: 'auto', type: 'text' },
+				agentid_type: { value: 'list', type: 'text' },
+				user: { value: '', type: 'text' },
+				user_type: { value: 'str', type: 'text' },
+				data: { value: '{}', type: 'text' },
+				data_type: { value: 'json', type: 'text' }
+			},
+			inputs: 1,
+			outputs: 1,
+			oneditprepare() {
+				$('#node-input-mode')
+					.typedInput({ types: [{ value: 'list', options: MODE_OPTIONS }] })
+					.on('change', (event, type, value) => {
+						$('.optional').hide()
+						$(`.optional-${value}`).show()
+					})
+				$('#node-input-agentid').typedInput({
+					typeField: '#node-input-agentid_type',
+					default: this.agentid_type || 'list',
+					types: [{
+						value: 'list', icon: 'fa fa-list', label: '选项', options: [{ value: 'auto', label: '自动获取' }]
+					}]
+				})
+				$('#node-input-user').typedInput({
+					typeField: '#node-input-user_type',
+					default: this.user_type || 'str',
+					types: ['str', 'msg', 'flow', 'global', 'json', 'jsonata', 'env']
+				})
+				$('#node-input-data').typedInput({
+					typeField: '#node-input-data_type',
+					default: this.data_type || 'json',
+					types: ['msg', 'flow', 'global', 'json', 'jsonata', 'env']
+				})
+			}
+		})
+	})()
+</script>

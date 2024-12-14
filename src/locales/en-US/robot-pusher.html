@@ -1,0 +1,71 @@
+<script type="text/html" data-help-name="wechat-robot-pusher">
+  <p>
+    <span>群机器人消息推送</span>
+    <a href="https://developer.work.weixin.qq.com/document/path/99110">查看详情</a>
+  </p>
+
+  <ul>
+    <li>
+      当前自定义机器人支持文本消息(
+      <code>text</code>
+      )、图片消息(
+      <code>image</code>
+      )、图文消息(
+      <code>news</code>
+      )、语音消息(
+      <code>voice</code>
+      )、文件消息(
+      <code>file</code>
+      )、模板卡片(
+      <code>template_card</code>
+      )、Markdown(
+      <code>markdown</code>
+      )七种消息类型。
+    </li>
+    <li>
+      机器人的
+      <code>text</code>
+      /
+      <code>markdown</code>
+      类型消息支持在
+      <code>content</code>
+      中使用
+      <code><@userid></code>
+      扩展语法来
+      <code>@群成员</code>
+    </li>
+  </ul>
+
+  <h3>输入信息</h3>
+  <dl class="message-properties">
+    <dt>
+      <span>消息类型</span>
+      <span class="property-type">
+        <code>select</code>
+      </span>
+    </dt>
+    <dd>文本消息、图片消息、图文消息、语音消息、文件消息、模版卡片、Markdown</dd>
+    <dt class="optional">
+      <span>消息内容</span>
+      <span class="property-type">
+        <code>object</code>
+      </span>
+    </dt>
+    <dd>
+      根据
+      <code>消息类型</code>
+      的不同设置不同的消息内容
+    </dd>
+  </dl>
+
+  <h3>输出信息</h3>
+  <dl class="message-properties">
+    <dt>
+      <span>payload</span>
+      <span class="property-type">
+        <code>object</code>
+      </span>
+    </dt>
+    <dd>推送结果</dd>
+  </dl>
+</script>

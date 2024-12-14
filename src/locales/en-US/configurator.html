@@ -1,0 +1,91 @@
+<script type="text/html" data-help-name="wechat-configurator">
+  <p>
+    <span>在企业的管理端后台，进入需要设置接收消息的目标应用，点击“接收消息”的“设置API接收”按钮，进入配置页面。配置回调参数以及选择需要接收的事件类型</span>
+    <a href="https://work.weixin.qq.com/wework_admin/register_wx">注册企业微信</a>
+  </p>
+
+  <h3>配置信息</h3>
+  <dl class="message-properties">
+    <dt>
+      <span>CorpId</span>
+      <span class="property-type">
+        <code>string</code>
+      </span>
+    </dt>
+    <dd>企业 ID</dd>
+    <dt>
+      <span>AgentId</span>
+      <span class="property-type">
+        <code>string</code>
+      </span>
+    </dt>
+    <dd>应用 ID</dd>
+    <dt>
+      <span>Secret</span>
+      <span class="property-type">
+        <code>string</code>
+      </span>
+    </dt>
+    <dd>应用 Secret</dd>
+    <dt>
+      <span>Token</span>
+      <span class="property-type">
+        <code>string</code>
+      </span>
+    </dt>
+    <dd>消息接收 Token</dd>
+    <dt>
+      <span>AES Key</span>
+      <span class="property-type">
+        <code>string</code>
+      </span>
+    </dt>
+    <dd>消息接收 Encoding AES Key</dd>
+    <dt class="optional">
+      <span>[Proxy Url]</span>
+      <span class="property-type">
+        <code>string</code>
+      </span>
+    </dt>
+    <dd>企业微信接口代理地址</dd>
+  </dl>
+
+  <h3>注册企业微信</h3>
+  <ol>
+    <li>
+      <a href="https://work.weixin.qq.com/wework_admin/register_wx">注册企业微信</a>
+      <span>没啥要求随意注册即可使用</span>
+    </li>
+    <li>
+      <div>获取企业 ID, 企业 ID 在我的企业最下面可以找到</div>
+      <img src="/resources/node-red-contrib-wechats/config-0.png" />
+    </li>
+    <li>
+      <div>创建应用</div>
+      <img src="/resources/node-red-contrib-wechats/config-1.png" />
+      <img src="/resources/node-red-contrib-wechats/config-2.png" />
+    </li>
+    <li>
+      <div>
+        获取配置信息, 直接进入应用里面可以获取到
+        <code>AgentId</code>
+        、
+        <code>Secret</code>
+      </div>
+      <img src="/resources/node-red-contrib-wechats/config-3.png" />
+    </li>
+    <li>
+      <div>接收消息设置</div>
+      <img src="/resources/node-red-contrib-wechats/config-4.png" />
+    </li>
+    <li>
+      <div>
+        节点信息配置, 直接进入应用里面可以获取到
+        <code>AgentId</code>
+        、
+        <code>Secret</code>
+      </div>
+      <img src="/resources/node-red-contrib-wechats/config-5.png" />
+    </li>
+  </ol>
+</script>

@@ -1,0 +1,45 @@
+<script type="text/html" data-help-name="wechat-reply">
+  <p>
+    <span>当企业后台收到推送过来的普通消息或事件消息（支持被动回复的事件类型）后，可以在响应里带上被动回复消息，下面是对回复消息的结构体的说明</span>
+    <a href="https://developer.work.weixin.qq.com/document/path/90241">查看详情</a>
+  </p>
+
+  <h3>输入信息</h3>
+  <dl class="message-properties">
+    <dt>
+      <span>回应类型</span>
+      <span class="property-type">
+        <code>select</code>
+      </span>
+    </dt>
+    <dd>可选：JSON 内容、XML 内容、TEXT 内容、Buffer 内容</dd>
+    <dt>
+      <span>回应内容</span>
+      <span class="property-type">
+        <code>xml</code>
+        <span>|</span>
+        <code>json</code>
+        <span>|</span>
+        <code>text</code>
+        <span>|</span>
+        <code>buffer</code>
+      </span>
+    </dt>
+    <dd>
+      响应内容根据响应类型格式来设置, 如果为空则获取
+      <code>{{ msg.payload }}</code>
+      内容
+    </dd>
+    <dt>
+      <span>文件名称</span>
+      <span class="property-type">
+        <code>string</code>
+      </span>
+    </dt>
+    <dd>
+      如果响应类型是
+      <code>buffer 内容</code>
+      时必须设置文件名称
+    </dd>
+  </dl>
+</script>

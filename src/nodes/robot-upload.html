@@ -1,0 +1,87 @@
+<script type="text/html" data-template-name="wechat-robot-uploader">
+  <div class="form-row">
+    <label for="node-input-wechat">
+      <i class="fa fa-cogs"></i>
+      <span class="margin-left:8px">配置</span>
+    </label>
+    <input type="text" id="node-input-robot" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-name">
+      <i class="fa fa-tag"></i>
+      <span class="margin-left:8px">名称</span>
+    </label>
+    <input type="text" id="node-input-name" placeholder="文件上传" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-ftype">
+      <i class="fa fa-bars"></i>
+      <span class="margin-left:8px">文件类型</span>
+    </label>
+    <input id="node-input-ftype" type="text" placeholder="文件类型(voice、file)" style="width:70%" />
+    <input id="node-input-ftype_type" type="hidden" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-content">
+      <i class="fa fa-file"></i>
+      <span class="margin-left:8px">文件内容</span>
+    </label>
+    <input id="node-input-content" type="text" placeholder="文件内容" style="width:70%" />
+    <input id="node-input-content_type" type="hidden" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-filename">
+      <i class="fa fa-file"></i>
+      <span class="margin-left:8px">文件名称</span>
+    </label>
+    <input id="node-input-filename" type="text" placeholder="文件名称" style="width:70%" />
+    <input id="node-input-filename_type" type="hidden" />
+  </div>
+</script>
+
+<script type="text/javascript">
+  ;(function () {
+    const TYPE_OPTIONS = [
+      { value: 'voice', label: '语音文件' },
+      { value: 'file', label: '普通文件' }
+    ]
+    RED.nodes.registerType('wechat-robot-uploader', {
+      icon: 'upload.svg',
+      category: '企业微信',
+      color: '#10AEFF',
+      paletteLabel: '文件上传',
+      label: function () {
+        return this.name || (TYPE_OPTIONS.find(({ value }) => value === this.ftype) || { label: '文件上传' }).label
+      },
+      defaults: {
+        name: { value: '' },
+        robot: { value: '', type: 'wechat-robot-configurator' },
+        ftype: { value: '', type: 'text' },
+        ftype_type: { value: 'list', type: 'text' },
+        content: { value: '', type: 'text' },
+        content_type: { value: 'str', type: 'text' },
+        filename: { value: '', type: 'text' },
+        filename_type: { value: 'str', type: 'text' }
+      },
+      inputs: 1,
+      outputs: 1,
+      oneditprepare() {
+        $('#node-input-ftype').typedInput({
+          typeField: '#node-input-ftype_type',
+          default: this.ftype_type || 'list',
+          types: ['str', 'msg', 'flow', 'global', 'env', { value: 'list', icon: 'fa fa-list', label: '文件类型', options: TYPE_OPTIONS }]
+        })
+        $('#node-input-content').typedInput({
+          typeField: '#node-input-content_type',
+          default: this.content_type || 'str',
+          types: ['str', 'msg', 'flow', 'global', 'env']
+        })
+        $('#node-input-filename').typedInput({
+          typeField: '#node-input-filename_type',
+          default: this.filename_type || 'str',
+          types: ['str', 'msg', 'flow', 'global', 'env']
+        })
+      }
+    })
+  })()
+</script>

@@ -1,0 +1,87 @@
+<script type="text/html" data-template-name="wechat-menus">
+  <div class="form-row">
+    <label for="node-input-wechat">
+      <i class="fa fa-cogs"></i>
+      <span class="margin-left:8px">配置</span>
+    </label>
+    <input type="text" id="node-input-wechat" style="width:70%" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-name">
+      <i class="fa fa-tag"></i>
+      <span class="margin-left:8px">名称</span>
+    </label>
+    <input type="text" id="node-input-name" placeholder="自定义菜单" style="width:70%" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-mode">
+      <i class="fa fa-terminal"></i>
+      <span class="margin-left:8px">执行模式</span>
+    </label>
+    <input type="text" id="node-input-mode" placeholder="执行模式" style="width:70%" />
+  </div>
+	<div class="form-row">
+    <label for="node-input-agentid">
+      <i class="fa fa-th"></i>
+      <span class="margin-left:8px">应用 ID</span>
+    </label>
+    <input id="node-input-agentid" type="text" placeholder="应用 ID" style="width:70%" />
+    <input id="node-input-agentid_type" type="hidden" />
+  </div>
+  <div class="form-row optional-menus">
+    <label for="node-input-menus">
+      <i class="fa fa-th-list"></i>
+      <span class="margin-left:8px">菜单数据</span>
+    </label>
+    <input id="node-input-menus" type="text" placeholder="菜单数据" style="width:70%" />
+    <input id="node-input-menus_type" type="hidden" />
+  </div>
+</script>
+
+<script type="text/javascript">
+	; (function () {
+		const MODE_OPTIONS = [
+			{ value: '0', label: '获取菜单' },
+			{ value: '1', label: '更新菜单' },
+			{ value: '2', label: '删除菜单' }
+		]
+		RED.nodes.registerType('wechat-menus', {
+			icon: 'menus.svg',
+			category: '企业微信',
+			color: '#2fc22e',
+			paletteLabel: '自定义菜单',
+			label: function () {
+				return this.name || (MODE_OPTIONS.find(({ value }) => value === this.mode) || { label: '自定义菜单' }).label
+			},
+			defaults: {
+				name: { value: '' },
+				wechat: { value: '', type: 'wechat-configurator' },
+				mode: { value: '0', type: 'text' },
+				agentid: { value: '', type: 'text' },
+				agentid_type: { value: 'list', type: 'text' },
+				menus: { value: '{}', type: 'text' },
+				menus_type: { value: 'json', type: 'text' },
+			},
+			inputs: 1,
+			outputs: 1,
+			oneditprepare() {
+				$('#node-input-mode')
+					.typedInput({ types: [{ value: 'list', icon: 'fa fa-list', label: '选项', options: MODE_OPTIONS }] })
+					.on('change', (event, type, value) => {
+						if (value === '1') $('.optional-menus').show()
+						else $('.optional-menus').hide()
+					})
+				$('#node-input-agentid').typedInput({
+					typeField: '#node-input-agentid_type',
+					default: this.agentid_type || 'list',
+					types: [{ value: 'list', icon: 'fa fa-list', label: '选项', options: [{ value: 'auto', label: '自动获取' }] }]
+				})
+				$('#node-input-menus').typedInput({
+					typeField: '#node-input-menus_type',
+					default: this.menus_type || 'json',
+					types: ['msg', 'flow', 'global', 'json', 'jsonata', 'env']
+				})
+			}
+		})
+	})()
+</script>

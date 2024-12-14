@@ -1,0 +1,102 @@
+<script type="text/html" data-template-name="wechat-robot-pusher">
+  <div class="form-row">
+    <label for="node-input-robot">
+      <i class="fa fa-android"></i>
+      <span class="margin-left:8px">机器人</span>
+    </label>
+    <input type="text" id="node-input-robot" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-name">
+      <i class="fa fa-tag"></i>
+      <span class="margin-left:8px">名称</span>
+    </label>
+    <input type="text" id="node-input-name" placeholder="群机器消息推送" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-msgtype">
+      <i class="fa fa-bars"></i>
+      <span class="margin-left:8px">消息类型</span>
+    </label>
+    <input type="text" id="node-input-msgtype" placeholder="消息类型" style="width:70%" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-content">
+      <i class="fa fa-commenting"></i>
+      <span class="margin-left:8px">消息内容</span>
+    </label>
+    <input id="node-input-content" type="text" placeholder="消息内容" style="width:70%" />
+    <input id="node-input-content_type" type="hidden" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-touser">
+      <i class="fa fa-users"></i>
+      <span class="margin-left:8px">成员列表</span>
+    </label>
+    <input id="node-input-touser" type="text" placeholder="提醒群中的指定成员(@某个成员), @all表示所有人" style="width:70%" />
+    <input id="node-input-touser_type" type="hidden" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-tomobile">
+      <i class="fa fa-mobile"></i>
+      <span class="margin-left:8px">手机列表</span>
+    </label>
+    <input id="node-input-tomobile" type="text" placeholder="提醒手机号对应的群成员(@某个成员), @all表示所有人" style="width:70%" />
+    <input id="node-input-tomobile_type" type="hidden" />
+  </div>
+</script>
+
+<script type="text/javascript">
+  ;(function () {
+    const TYPE_OPTIONS = [
+      { value: 'text', label: '文本消息' },
+      { value: 'image', label: '图片消息' },
+      { value: 'news', label: '图文消息' },
+      { value: 'voice', label: '语音消息' },
+      { value: 'file', label: '文件消息' },
+      { value: 'template_card', label: '模版卡片' },
+      { value: 'markdown', label: 'Markdown' }
+    ]
+    RED.nodes.registerType('wechat-robot-pusher', {
+      icon: 'robot.svg',
+      category: '企业微信',
+      color: '#10AEFF',
+      paletteLabel: '消息推送',
+      label: function () {
+        return this.name || (TYPE_OPTIONS.find(({ value }) => value === this.msgtype) || { label: '群机器消息推送' }).label
+      },
+      defaults: {
+        name: { value: '' },
+        robot: { type: 'wechat-robot-configurator' },
+        msgtype: { value: 'text', type: 'text' },
+        content: { value: '', type: 'text' },
+        content_type: { value: 'str', type: 'text' },
+        touser: { value: '', type: 'text' },
+        touser_type: { value: 'str', type: 'text' },
+        tomobile: { value: '', type: 'text' },
+        tomobile_type: { value: 'str', type: 'text' }
+      },
+      inputs: 1,
+      outputs: 1,
+      oneditprepare() {
+        $('#node-input-msgtype').typedInput({ types: [{ value: 'list', icon: 'fa fa-list', label: '消息类型', options: TYPE_OPTIONS }] })
+        // 消息内容
+        $('#node-input-content').typedInput({
+          typeField: '#node-input-content_type',
+          default: this.content_type || 'str',
+          types: ['str', 'msg', 'flow', 'global', 'json', 'jsonata', 'env']
+        })
+        $('#node-input-touser').typedInput({
+          typeField: '#node-input-touser_type',
+          default: this.touser_type || 'str',
+          types: ['str', 'msg', 'flow', 'global', 'env']
+        })
+        $('#node-input-tomobile').typedInput({
+          typeField: '#node-input-tomobile_type',
+          default: this.tomobile_type || 'str',
+          types: ['str', 'msg', 'flow', 'global', 'env']
+        })
+      }
+    })
+  })()
+</script>

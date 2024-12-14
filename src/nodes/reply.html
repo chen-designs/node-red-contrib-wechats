@@ -1,0 +1,123 @@
+<script type="text/html" data-template-name="wechat-reply">
+  <div class="form-row">
+    <label for="node-input-wechat">
+      <i class="fa fa-cogs"></i>
+      <span class="margin-left:8px">配置</span>
+    </label>
+    <input type="text" id="node-input-wechat" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-name">
+      <i class="fa fa-tag"></i>
+      <span class="margin-left:8px">名称</span>
+    </label>
+    <input type="text" id="node-input-name" placeholder="回应消息" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-rtype">
+      <i class="fa fa-sliders"></i>
+      <span class="margin-left:8px">回应类型</span>
+    </label>
+    <input id="node-input-rtype" type="text" placeholder="回应类型" style="width:70%" />
+    <input id="node-input-rtype_type" type="hidden" />
+  </div>
+  <div class="form-row optional optional-filename">
+    <label for="node-input-filename">
+      <i class="fa fa-file"></i>
+      <span class="margin-left:8px">文件名称</span>
+    </label>
+    <input id="node-input-filename" type="text" placeholder="文件名称" style="width:70%" />
+    <input id="node-input-filename_type" type="hidden" />
+  </div>
+  <div class="form-row" style="position: relative; margin-bottom: 0px;">
+    <label for="node-input-content">
+      <i class="fa fa-sliders"></i>
+      <span class="margin-left:8px">回应内容</span>
+    </label>
+    <input type="hidden" id="node-input-content" autofocus="autofocus" placeholder="回应内容" />
+  </div>
+  <div class="form-row node-text-editor-row">
+    <div id="node-input-content-editor" class="node-text-editor" style="height:350px;min-height:150px"></div>
+  </div>
+</script>
+
+<script type="text/javascript">
+  RED.nodes.registerType('wechat-reply', {
+    icon: 'responder.svg',
+    category: '企业微信',
+    color: '#2fc22e',
+    paletteLabel: '回应消息',
+    label: function () {
+      return this.name || '回应消息'
+    },
+    defaults: {
+      name: { value: '' },
+      wechat: { value: '', type: 'wechat-configurator' },
+      rtype: { value: '', type: 'text' },
+      rtype_type: { value: 'list', type: 'text' },
+      filename: { value: '', type: 'text' },
+      filename_type: { value: 'str', type: 'text' },
+      content: { value: '', type: 'text' }
+    },
+    inputs: 1,
+    outputs: 0,
+    oneditprepare() {
+      $('#node-input-rtype')
+        .typedInput({
+          typeField: '#node-input-rtype_type',
+          default: this.rtype_type || 'list',
+          types: [
+            {
+              value: 'list',
+              icon: 'fa fa-list',
+              label: '回应类型',
+              options: [
+                { value: 'json', label: 'JSON 内容' },
+                { value: 'xml', label: 'XML 内容' },
+                { value: 'text', label: 'TEXT 内容' },
+                { value: 'file', label: 'Buffer 内容' }
+              ]
+            }
+          ]
+        })
+        .on('change', (event, type, value) => {
+          if (value === 'file') $('.optional-filename').show()
+          else $('.optional-filename').hide()
+          this.editor.getSession().setMode({ path: `ace/mode/${value === 'file' ? 'text' : value}`, v: Date.now() })
+        })
+      $('#node-input-filename').typedInput({
+        typeField: '#node-input-filename_type',
+        default: this.filename_type || 'str',
+        types: ['str', 'msg', 'flow', 'global', 'env']
+      })
+      const stateId = RED.editor.generateViewStateId('node', this, '')
+      const editor = (this.editor = RED.editor.createEditor({
+        stateId: stateId,
+        id: 'node-input-content-editor',
+        value: $('#node-input-content').val(),
+        mode: `ace/mode/${(this.rtype === 'file' ? 'text' : this.rtype) || 'json'}`,
+        folding: true
+      }))
+    },
+    oneditsave: function () {
+      $('#node-input-content').val(this.editor.getValue())
+      this.editor.destroy()
+      delete this.editor
+    },
+    oneditcancel: function () {
+      this.editor.destroy()
+      delete this.editor
+    },
+    oneditresize: function (size) {
+      var rows = $('#dialog-form>div:not(.node-text-editor-row)')
+      var height = $('#dialog-form').height()
+      for (var i = 0; i < rows.length; i++) {
+        height -= $(rows[i]).outerHeight(true)
+      }
+      var editorRow = $('#dialog-form>div.node-text-editor-row')
+      height -= parseInt(editorRow.css('marginTop')) + parseInt(editorRow.css('marginBottom'))
+      $('#dialog-form .node-text-editor').css('height', height + 'px')
+      this.editor.resize()
+    }
+  })
+</script>

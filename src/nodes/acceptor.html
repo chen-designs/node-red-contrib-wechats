@@ -1,0 +1,78 @@
+<script type="text/html" data-template-name="wechat-acceptor">
+  <div class="form-row">
+    <label for="node-input-wechat">
+      <i class="fa fa-cogs"></i>
+      <span class="margin-left:8px">配置</span>
+    </label>
+    <input id="node-input-wechat" type="text" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-name">
+      <i class="fa fa-tag"></i>
+      <span class="margin-left:8px">名称</span>
+    </label>
+    <input id="node-input-name" placeholder="接收消息" type="text" style="width:70%" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-endpoint">
+      <i class="fa fa-link"></i>
+      <span class="margin-left:8px">接收 Url</span>
+    </label>
+    <input id="node-input-endpoint" placeholder="消息接收 Url" type="text" style="width:70%" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-timeout">
+      <i class="fa fa-hourglass-half"></i>
+      <span class="margin-left:8px">超时响应</span>
+    </label>
+    <input id="node-input-timeout" type="text" placeholder="设置响应超时,默认 5000 毫秒" style="width:70%" />
+    <input id="node-input-timeout_type" type="hidden" />
+  </div>
+</script>
+
+<script type="text/javascript">
+	; (function () {
+		const RULE_OPTIONS = [
+			{ value: '/wechat/text', label: '文本消息' },
+			{ value: '/wechat/image', label: '图片消息' },
+			{ value: '/wechat/voice', label: '语音消息' },
+			{ value: '/uploader', label: '文件上传' },
+			{ value: '*', label: '除此以外' }
+		]
+		RED.nodes.registerType('wechat-acceptor', {
+			icon: 'wechat.svg',
+			category: '企业微信',
+			color: '#2fc22e',
+			paletteLabel: '接收消息',
+			label: function () {
+				return this.name || '接收消息'
+			},
+			defaults: {
+				name: { value: '', type: 'text' },
+				wechat: { value: '', type: 'wechat-configurator', required: true },
+				endpoint: { value: '/wechat', type: 'text', required: true },
+				timeout: { value: 5000, type: 'number' }, // 超时响应
+				timeout_type: { value: 'list', type: 'text' }
+			},
+			inputs: 0,
+			outputs: 2,
+			outputLabels: ['来自企业微信', '来自用户请求'],
+			oneditprepare() {
+				const TIMEOUT_OPTIONS = [
+					{ value: 5 * 1000, label: '5 秒' },
+					{ value: 10 * 1000, label: '10 秒' },
+					{ value: 30 * 1000, label: '30 秒' },
+					{ value: 60 * 1000, label: '60 秒' },
+					{ value: 2 * 60 * 1000, label: '2 分钟' },
+					{ value: 5 * 60 * 1000, label: '5 分钟' },
+					{ value: 10 * 60 * 1000, label: '10 分钟' }
+				]
+				$('#node-input-timeout').typedInput({
+					typeField: '#node-input-timeout_type',
+					default: this.timeout_type || 'list',
+					types: ['num', { value: 'list', icon: 'fa fa-clock-o', label: '时长', options: TIMEOUT_OPTIONS }]
+				})
+			}
+		})
+	})()
+</script>

@@ -1,0 +1,107 @@
+<script type="text/html" data-help-name="wechat-robot-uploader">
+  <p>
+    <span>群机器人文件上传</span>
+    <a href="https://developer.work.weixin.qq.com/document/path/99110#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%8E%A5%E5%8F%A3">查看详情</a>
+  </p>
+
+  <ul>
+    <li>为了能够让自建应用和企业微信进行双向通信，企业可以在应用的管理后台开启接收消息模式。</li>
+    <li>开启接收消息模式的企业, 需要提供可用的接收消息服务器URL(建议使用https)。</li>
+    <li>开启接收消息模式后，用户在应用里发送的消息会推送给企业后台。此外，还可配置地理位置上报等事件消息，当事件触发时企业微信会把相应的数据推送到企业的后台。</li>
+    <li>企业后台接收到消息后，可在回复该消息请求的响应包里带上新消息，企业微信会将该被动回复消息推送给用户。</li>
+  </ul>
+
+  <h3>输入信息</h3>
+  <dl class="message-properties">
+    <dt>
+      <span>文件类型</span>
+      <span class="property-type">
+        <code>string</code>
+      </span>
+    </dt>
+    <dd>
+      文件类型，分别有语音(
+      <code>voice</code>
+      )和普通文件(
+      <code>file</code>
+      )
+    </dd>
+    <dt>
+      <span>文件内容</span>
+      <span class="property-type">
+        <code>string</code>
+      </span>
+    </dt>
+    <dd>
+      文件内容必须是
+      <code>二进制数据</code>
+      或
+      <code>base64</code>
+      编码后的文件数据
+    </dd>
+    <dt>
+      <span>文件名称</span>
+      <span class="property-type">
+        <code>string</code>
+      </span>
+    </dt>
+    <dd>
+      标识文件展示的名称。比如使用该
+      <code>media_id</code>
+      发消息时, 展示的文件名由该字段控制
+    </dd>
+  </dl>
+
+  <h3>输出信息</h3>
+  <dl class="message-properties">
+    <dt>
+      <span>payload</span>
+      <span class="property-type">
+        <code>object</code>
+      </span>
+    </dt>
+    <dd>返回数据</dd>
+    <dt>
+      <span>payload.type</span>
+      <span class="property-type">
+        <code>string</code>
+      </span>
+    </dt>
+    <dd>
+      文件类型，分别有语音(
+      <code>voice</code>
+      )和普通文件(
+      <code>file</code>
+      )
+    </dd>
+    <dt>
+      <span>payload.media_id</span>
+      <span class="property-type">
+        <code>string</code>
+      </span>
+    </dt>
+    <dd>媒体文件上传后获取的唯一标识 3 天内有效</dd>
+    <dt>
+      <span>payload.created_at</span>
+      <span class="property-type">
+        <code>string</code>
+      </span>
+    </dt>
+    <dd>媒体文件上传时间戳</dd>
+  </dl>
+
+  <h3>上传的媒体文件限制</h3>
+  <ul>
+    <li>所有类型的文件大小均要求大于 5 个字节</li>
+    <li>
+      普通文件(
+      <code>file</code>
+      ): 文件大小不超过 20M
+    </li>
+    <li>
+      语音(
+      <code>voice</code>
+      ): 文件大小不超过 2M, 播放长度不超过 60s, 仅支持 AMR 格式
+    </li>
+  </ul>
+</script>

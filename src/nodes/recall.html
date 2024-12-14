@@ -1,0 +1,51 @@
+<script type="text/html" data-template-name="wechat-recall">
+  <div class="form-row">
+    <label for="node-input-wechat">
+      <i class="fa fa-cogs"></i>
+      <span class="margin-left:8px">配置</span>
+    </label>
+    <input type="text" id="node-input-wechat" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-name">
+      <i class="fa fa-tag"></i>
+      <span class="margin-left:8px">名称</span>
+    </label>
+    <input type="text" id="node-input-name" placeholder="撤回消息" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-msgid">
+      <i class="fa fa-commenting"></i>
+      <span class="margin-left:8px">消息 ID</span>
+    </label>
+    <input id="node-input-msgid" type="text" placeholder="消息 ID" style="width:70%" />
+    <input id="node-input-msgid_type" type="hidden" />
+  </div>
+</script>
+
+<script type="text/javascript">
+  RED.nodes.registerType('wechat-recall', {
+    icon: 'recall.svg',
+    category: '企业微信',
+		color: '#2fc22e',
+    paletteLabel: '撤回消息',
+    label: function () {
+      return this.name || '撤回消息'
+    },
+    defaults: {
+      name: { value: '' },
+      wechat: { value: '', type: 'wechat-configurator' },
+      msgid: { value: '', type: 'text' },
+      msgid_type: { value: 'str', type: 'text' }
+    },
+    inputs: 1,
+    outputs: 1,
+    oneditprepare() {
+      $('#node-input-msgid').typedInput({
+        typeField: '#node-input-msgid_type',
+        default: this.msgid_type || 'str',
+        types: ['str', 'msg', 'flow', 'global', 'env']
+      })
+    }
+  })
+</script>

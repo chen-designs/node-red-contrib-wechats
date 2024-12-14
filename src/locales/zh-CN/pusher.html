@@ -1,0 +1,98 @@
+<script type="text/html" data-help-name="wechat-pusher">
+  <p>
+    <span>应用支持推送文本、图片、视频、文件、图文等类型</span>
+    <a href="https://developer.work.weixin.qq.com/document/path/90236">查看详情</a>
+  </p>
+
+  <h3>输入信息</h3>
+  <dl class="message-properties">
+    <dt>
+      <span>消息类型</span>
+      <span class="property-type">
+        <code>select</code>
+      </span>
+    </dt>
+    <dd>支持推送文本、图片、视频、文件、图文等类型</dd>
+    <dt>
+      <span>消息内容</span>
+      <span class="property-type">
+        <code>object</code>
+        <span>|</span>
+        <code>string</code>
+      </span>
+    </dt>
+    <dd>
+      根据
+      <code>消息类型</code>
+      的不同设置不同的消息内容
+    </dd>
+    <dt>
+      <span>接收成员</span>
+      <span class="property-type">
+        <code>string</code>
+      </span>
+    </dt>
+    <dd>
+      指定接收消息的成员, 成员ID列表(多个接收者用
+      <code>|</code>
+      分隔, 最多支持1000个)。特殊情况：指定为
+      <code>@all</code>
+      ，则向该企业应用的全部成员发送
+    </dd>
+    <dt>
+      <span>接收部门</span>
+      <span class="property-type">
+        <code>string</code>
+      </span>
+    </dt>
+    <dd>
+      指定接收消息的部门, 部门ID列表, 多个接收者用
+      <code>|</code>
+      分隔, 最多支持100个。当
+      <code>接收成员</code>
+      为
+      <code>@all</code>
+      时忽略本参数
+    </dd>
+    <dt>
+      <span>接收标签</span>
+      <span class="property-type">
+        <code>string</code>
+      </span>
+    </dt>
+    <dd>
+      指定接收消息的标签, 标签ID列表, 多个接收者用
+      <code>|</code>
+      分隔, 最多支持100个。当
+      <code>接收成员</code>
+      为
+      <code>@all</code>
+      时忽略本参数
+    </dd>
+    <dt>
+      <span>否是保密</span>
+      <span class="property-type">
+        <code>string</code>
+      </span>
+    </dt>
+    <dd>
+      表示是否是保密消息,
+      <code>否</code>
+      表示可对外分享、
+      <code>是</code>
+      表示不能分享且内容显示水印, 默认为
+      <code>否</code>
+    </dd>
+  </dl>
+
+  <h3>输出信息</h3>
+  <dl class="message-properties">
+    <dt>
+      <span>payload</span>
+      <span class="property-type">
+        <code>object</code>
+      </span>
+    </dt>
+    <dd>返回结果</dd>
+  </dl>
+</script>

@@ -1,0 +1,57 @@
+<script type="text/html" data-template-name="wechat-robot-configurator">
+  <div class="form-row">
+    <label for="node-config-input-name">
+      <i class="fa fa-tag"></i>
+      <span class="margin-left:8px">机器人名称</span>
+    </label>
+    <input type="text" id="node-config-input-name" placeholder="机器人名称" />
+  </div>
+  <div class="form-row">
+    <label for="node-config-input-key">
+      <i class="fa fa-key"></i>
+      <span class="margin-left:8px">机器人 Key</span>
+    </label>
+    <input id="node-config-input-key" type="text" placeholder="Webhook Key" style="width:70%" />
+    <input id="node-config-input-key_type" type="hidden" />
+  </div>
+  <div class="form-row">
+    <label for="node-config-input-proxy">
+      <i class="fa fa-link"></i>
+      <span class="margin-left:8px">代理 Url</span>
+    </label>
+    <input id="node-config-input-proxy" type="text" placeholder="https://qyapi.weixin.qq.com" style="width:70%" />
+    <input id="node-config-input-proxy_type" type="hidden" />
+  </div>
+</script>
+
+<script type="text/javascript">
+	RED.nodes.registerType('wechat-robot-configurator', {
+		category: 'config',
+		color: '#10AEFF',
+		paletteLabel: '群机器人配置',
+		label: function () {
+			return this.name || '群机器人配置'
+		},
+		defaults: {
+			name: { value: '' }
+		},
+		credentials: {
+			key: { type: 'text', required: true },
+			key_type: { value: 'cred', type: 'text' },
+			proxy: { type: 'text' },
+			proxy_type: { value: 'str', type: 'text' }
+		},
+		oneditprepare() {
+			$('#node-config-input-key').typedInput({
+				typeField: $('#node-config-input-key_type'),
+				default: this.key_type || 'cred',
+				types: ['str', 'cred', 'env', 'global']
+			})
+			$('#node-config-input-proxy').typedInput({
+				typeField: $('#node-config-input-proxy_type'),
+				default: this.proxy_type || 'str',
+				types: ['str', 'cred', 'env', 'global']
+			})
+		}
+	})
+</script>
